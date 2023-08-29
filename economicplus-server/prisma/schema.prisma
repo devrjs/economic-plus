@@ -1,0 +1,77 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+
+    // provider = "sqlite"
+    // url      = "file:./dev.db"
+}
+
+model Tokens {
+    userId                     String  @id
+    refreshToken               String? @unique
+    refreshTokenExpiresOn      Int?
+    confirmationToken          String? @unique
+    confirmationTokenExpiresOn Int?
+    user                       User    @relation(fields: [userId], references: [id])
+
+    @@map("tokens")
+}
+
+model User {
+    id            String     @id @default(uuid())
+    email         String     @unique
+    name          String
+    password      String
+    accountStatus String     @default("unverified")
+    createdAt     DateTime   @default(now())
+    categories    Category[]
+    finances      Finances[]
+    Goals         Goals[]
+    Tokens        Tokens?
+
+    @@map("users")
+}
+
+model Finances {
+    id          String    @id @default(uuid())
+    description String
+    amount      Float
+    date        DateTime
+    type        String
+    createdAt   DateTime  @default(now())
+    categoryId  String?
+    userId      String
+    category    Category? @relation(fields: [categoryId], references: [id])
+    user        User      @relation(fields: [userId], references: [id])
+
+    @@map("finances")
+}
+
+model Category {
+    id          String     @id @default(uuid())
+    description String
+    createdAt   DateTime   @default(now())
+    userId      String
+    finances    Finances[]
+    user        User       @relation(fields: [userId], references: [id])
+    Goals       Goals?
+
+    @@map("category")
+}
+
+model Goals {
+    id             String    @id @default(uuid())
+    startingAmount Float
+    targetAmount   Float
+    targetDate     DateTime
+    categoryId     String?   @unique
+    userId         String
+    category       Category? @relation(fields: [categoryId], references: [id])
+    user           User      @relation(fields: [userId], references: [id])
+
+    @@map("goals")
+}
