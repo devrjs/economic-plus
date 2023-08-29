@@ -7,7 +7,7 @@ import { router } from "./router"
 const app = fastify()
 
 app.register(cors, {
-  origin: true,
+  origin: process.env.CLIENT_URL,
   exposedHeaders: ["X-Total-Count"],
 })
 
