@@ -1,11 +1,10 @@
 "use client"
 
 import { FinanceContext } from "@/contexts/FinanceContext"
-import { api } from "@/lib/api"
+import { useSelectCategories } from "@/hooks/useSelectCategories"
 import * as SelectPrimitive from "@radix-ui/react-select"
-import Cookies from "js-cookie"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 
 type Category = {
   id: string
@@ -15,22 +14,8 @@ type Category = {
 }
 
 export function SelectCategory() {
-  const { selectedCategory, setSelectedCategory } = useContext(FinanceContext)
-  const [categories, setCategories] = useState<Category[]>([])
-
-  useEffect(() => {
-    const token = Cookies.get("token")
-
-    api
-      .get("/all/categories", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(response => {
-        setCategories(response.data)
-      })
-  }, [])
+  const { selectedCategory, setSelectedCategory, toUpdate } = useContext(FinanceContext)
+  const { data, error, isLoading, dataUpdatedAt } = useSelectCategories(toUpdate)
 
   return (
     <SelectPrimitive.Root
@@ -38,6 +23,7 @@ export function SelectCategory() {
       onValueChange={value => {
         setSelectedCategory(value)
       }}
+      key={dataUpdatedAt}
     >
       <SelectPrimitive.Trigger asChild aria-label="Category">
         <button className="inline-flex select-none items-center justify-center bg-gray-700 rounded-md px-4 py-2 text-base font-medium focus:outline-none">
@@ -67,7 +53,7 @@ export function SelectCategory() {
               </SelectPrimitive.ItemIndicator>
             </SelectPrimitive.Item>
 
-            {categories.map(category => (
+            {data?.categories.map(category => (
               <SelectPrimitive.Item
                 key={category.id}
                 value={category.id}
