@@ -7,34 +7,31 @@ interface IRequest {
 
 class DeleteCategoryUseCase {
   async execute({ category_id, user_id }: IRequest): Promise<void> {
-    await prisma.finances.deleteMany({
-      where: {
-        categoryId: category_id,
-        AND: {
+    await Promise.all([
+      prisma.finances.deleteMany({
+        where: {
+          categoryId: category_id,
           userId: user_id,
         },
-      },
-    })
+      }),
 
-    await prisma.goals.delete({
-      where: {
-        categoryId: category_id,
-        AND: {
+      prisma.goals.deleteMany({
+        where: {
+          categoryId: category_id,
           userId: user_id,
         },
-      },
-    })
+      }),
+    ])
 
     await prisma.category.delete({
       where: {
         id: category_id,
-        AND: {
-          userId: user_id,
-        },
+        userId: user_id,
       },
     })
 
     return
   }
 }
+
 export { DeleteCategoryUseCase }
