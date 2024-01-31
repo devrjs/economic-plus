@@ -43,7 +43,7 @@ O objetivo deste sistema de controle de finanças é fornecer uma solução efic
 <img alt="Preview do projeto" src="https://github.com/devrjs/economic-plus/assets/88215288/955e1db0-4ee4-4efe-8f4d-c972121b00ec"/>
 </div>
 
-**Acesse o link:** [Ir para página do projeto](https://vitorgomes.vercel.app/)
+**Acesse o link:** [Ir para página do projeto](https://economic-plus.vercel.app/)
 
 <br>
 
