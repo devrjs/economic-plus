@@ -6,9 +6,9 @@
 
 <div align="center">
 
-<img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/devrjs/nlw-13-ia" />
-<img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/devrjs/nlw-13-ia" />
-<img alt="Badge de Licença" src="https://img.shields.io/github/license/devrjs/nlw-13-ia?color=%23835afd" />
+<!-- <img alt="GitHub Last Commit" src="https://img.shields.io/github/last-commit/devrjs/nlw-13-ia" /> -->
+<!-- <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/devrjs/nlw-13-ia" /> -->
+<!-- <img alt="Badge de Licença" src="https://img.shields.io/github/license/devrjs/nlw-13-ia?color=%23835afd" /> -->
 
 </div>
 
